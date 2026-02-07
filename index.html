@@ -1,50 +1,69 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Pages Site</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; color: #333; }
-        header { text-align: center; background: #f4f4f4; padding: 20px; border-radius: 8px; }
-        nav ul { list-style: none; padding: 0; text-align: center; }
-        nav li { display: inline; margin: 0 15px; }
-        nav a { color: #007bff; text-decoration: none; }
-        .content { max-width: 800px; margin: 20px auto; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name — Home</title>
+  <meta name="description" content="Personal site: projects, background, and contact." />
+  <link rel="stylesheet" href="/assets/css/styles.css" />
 </head>
 <body>
-    <header>
-        <h1>Welcome to My Site</h1>
-        <p>Hosted on GitHub Pages!</p>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="/">Your Name</a>
+      <div class="nav-links">
+        <a class="active" href="/">Home</a>
+        <a href="/about/">About</a>
+        <a href="/projects/">Projects</a>
+        <a href="/contact/">Contact</a>
+      </div>
     </nav>
-    
-    <div class="content">
-        <section id="about">
-            <h2>About Me</h2>
-            <p>This is a sample page. Edit this HTML and push changes to see updates live at yourusername.github.io.</p>
-        </section>
-        
-        <section id="projects">
-            <h2>Projects</h2>
-            <ul>
-                <li>Project 1: Description here.</li>
-                <li>Project 2: Add links to other .html files.</li>
-            </ul>
-        </section>
-        
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Email: your.email@example.com</p>
-        </section>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Hi, I’m</p>
+      <h1>Your Name</h1>
+      <p class="subtitle">
+        Short 1–2 sentence tagline. (e.g., Physics + CE @ UCSC, systems & automation.)
+      </p>
+      <div class="cta">
+        <a class="button" href="/projects/">View Projects</a>
+        <a class="button secondary" href="/about/">About Me</a>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Featured Project</h2>
+        <p>One-liner about your best project and what it does.</p>
+        <a href="/projects/">See details →</a>
+      </article>
+
+      <article class="card">
+        <h2>What I’m into</h2>
+        <p>Systems, networking, scraping, physics, etc.</p>
+        <a href="/about/">More →</a>
+      </article>
+
+      <article class="card">
+        <h2>Contact</h2>
+        <p>Fastest way to reach you.</p>
+        <a href="/contact/">Get in touch →</a>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> Your Name</span>
+      <span class="footer-links">
+        <a href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">GitHub</a>
+        <a href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noreferrer">LinkedIn</a>
+      </span>
     </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
 </body>
 </html>
