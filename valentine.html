@@ -109,6 +109,17 @@
 
             noBtn.style.left = `${x}px`;
             noBtn.style.top = `${y}px`;
+
+            const el = document.querySelector('#yes');
+            const styles = window.getComputedStyle(el);
+
+            const fontsize = parseFloat(styles.fontSize) + 2;
+            const topBottom = parseFloat(styles.paddingTop) + 2;
+            const leftRight = parseFloat(styles.paddingRight) + 2;
+    
+            el.style.fontSize = `${fontsize}px`;
+            el.style.padding = `${topBottom}px ${leftRight}px`;
+
         }
 
         noBtn.addEventListener("click", moveNo);
@@ -117,6 +128,8 @@
             title.textContent = "YAY!! 💞";
             subtitle.textContent = "I knew you'd say yes ;)";
             noBtn.remove();
+            yesBtn.style.fontSize = '18px';
+            yesBtn.style.padding = '12px 22px';
             yesBtn.textContent = "❤️";
         });
     </script>
