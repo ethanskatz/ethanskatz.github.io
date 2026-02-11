@@ -1,219 +1,125 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Will you be my Valentine?</title>
-  <style>
-    :root { color-scheme: light; }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Will you be my Valentine?</title>
+
+    <style>
     body {
-      margin: 0;
-      height: 100vh;
-      overflow: hidden;
-      display: grid;
-      place-items: center;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at top, #ffe6ee, #fff);
-      user-select: none;
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, #ffe6ee, #f5b3d2);
     }
+
     .card {
-      width: min(520px, calc(100vw - 32px));
-      padding: 28px;
-      border-radius: 24px;
-      background: rgba(255, 255, 255, 0.85);
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border: 1px solid rgba(255, 105, 180, 0.18);
-      text-align: center;
-      backdrop-filter: blur(10px);
+        background: white;
+        padding: 32px;
+        border-radius: 22px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        text-align: center;
+        z-index: 2;
     }
-    h1 { margin: 0 0 8px; font-size: clamp(24px, 4vw, 34px); }
-    p  { margin: 0 0 18px; opacity: 0.85; }
-    .btns {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-    button {
-      font-size: 18px;
-      padding: 12px 18px;
-      border-radius: 14px;
-      border: none;
-      cursor: pointer;
-      transition: transform 0.08s ease;
-      touch-action: manipulation;
-    }
-    button:active { transform: scale(0.98); }
+
+    h1 { margin: 0 0 12px; }
+    p { margin: 0 0 20px; }
+
     #yes {
-      background: #ff4d88;
-      color: white;
-      box-shadow: 0 10px 24px rgba(255, 77, 136, 0.35);
+        font-size: 18px;
+        padding: 12px 22px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        background: #ff4d88;
+        color: white;
     }
+
     #no {
-      background: #f1f3f5;
-      color: #333;
-      position: fixed; /* let it roam anywhere */
-      left: 50%;
-      top: 60%;
-      transform: translate(-50%, -50%);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+        position: absolute;
+        font-size: 18px;
+        padding: 12px 22px;
+        border-radius: 14px;
+        border: none;
+        cursor: pointer;
+        background: #e9ecef;
+        color: #333;
+        left: 50%;
+        top: 70%;
+        transform: translate(-50%, -50%);
+        }
+
+    .btns {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
     }
-    .footer {
-      margin-top: 14px;
-      font-size: 13px;
-      opacity: 0.6;
+
+    #yes, #no {
+        position: static;
+        transform: none;
     }
-    .hearts {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
-    }
-    .heart {
-      position: absolute;
-      font-size: 22px;
-      opacity: 0.75;
-      animation: floatUp linear forwards;
-    }
-    @keyframes floatUp {
-      from { transform: translateY(20vh) scale(1); opacity: 0.9; }
-      to   { transform: translateY(-120vh) scale(1.6); opacity: 0; }
-    }
-  </style>
+
+    </style>
 </head>
 <body>
-  <div class="hearts" id="hearts"></div>
 
-  <div class="card" id="card">
-    <h1 id="title">Will you be my Valentine? 💘</h1>
-    <p id="subtitle">Be honest. (You’re allowed to say no… if you can catch it 😭)</p>
-
-    <div class="btns">
-      <button id="yes" type="button">Yes 💖</button>
-      <button id="no" type="button" aria-label="No">No 💔</button>
+    <div class="card" id="card">
+        <h1 id="title">Zita, will you be my Valentine? 💘</h1>
+        <p id="subtitle">(please don't say no)</p>
+        <div class="btns">
+            <button id="yes" type="button">Yes ❤️</button>
+            <button id="no" type="button">No 💔</button>
+        </div>
     </div>
 
-    <div class="footer" id="footer">Tip: try clicking “No” 😈</div>
-  </div>
+    <script>
+        const noBtn = document.getElementById("no");
+        const yesBtn = document.getElementById("yes");
+        const title = document.getElementById("title");
+        const subtitle = document.getElementById("subtitle");
 
-  <script>
-    const noBtn = document.getElementById("no");
-    const yesBtn = document.getElementById("yes");
-    const title = document.getElementById("title");
-    const subtitle = document.getElementById("subtitle");
-    const footer = document.getElementById("footer");
-    const hearts = document.getElementById("hearts");
+        let freed = false;
 
-    // --- helpers ---
-    function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+        function freeNoButton() {
+        if (freed) return;
+        freed = true;
 
-    function randomPos() {
-      const rect = noBtn.getBoundingClientRect();
-      const pad = 12;
+        const r = noBtn.getBoundingClientRect();
+        noBtn.style.position = "fixed";
+        noBtn.style.left = `${r.left}px`;
+        noBtn.style.top = `${r.top}px`;
+        noBtn.style.transform = "none";
+        noBtn.style.zIndex = "9999";
+        }
 
-      const maxX = window.innerWidth - rect.width - pad;
-      const maxY = window.innerHeight - rect.height - pad;
+        function moveNo() {
+            freeNoButton();
+            const padding = 20;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-      const x = Math.random() * maxX + pad;
-      const y = Math.random() * maxY + pad;
+            const x = Math.random() * maxX + padding;
+            const y = Math.random() * maxY + padding;
 
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-      noBtn.style.transform = "translate(0, 0)";
-    }
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
 
-    function distanceToNo(clientX, clientY) {
-      const r = noBtn.getBoundingClientRect();
-      const cx = r.left + r.width / 2;
-      const cy = r.top + r.height / 2;
-      return Math.hypot(clientX - cx, clientY - cy);
-    }
+        noBtn.addEventListener("click", moveNo);
 
-    // --- make "No" dodge the cursor ---
-    const DODGE_RADIUS = 110; // px (tweak if you want it harder/easier)
-    let lastJump = 0;
+        yesBtn.addEventListener("click", () => {
+            title.textContent = "YAY!! 💞";
+            subtitle.textContent = "I knew you'd say yes ;)";
+            noBtn.remove();
+            yesBtn.textContent = "❤️";
+        });
+    </script>
 
-    function maybeDodge(clientX, clientY) {
-      const now = performance.now();
-      if (now - lastJump < 90) return; // debounce so it doesn't flicker insanely
-      if (distanceToNo(clientX, clientY) < DODGE_RADIUS) {
-        lastJump = now;
-        randomPos();
-      }
-    }
-
-    // Desktop: move away when mouse gets close
-    window.addEventListener("mousemove", (e) => {
-      maybeDodge(e.clientX, e.clientY);
-    });
-
-    // Mobile: dodge on touch move
-    window.addEventListener("touchmove", (e) => {
-      const t = e.touches[0];
-      if (!t) return;
-      maybeDodge(t.clientX, t.clientY);
-    }, { passive: true });
-
-    // If they try to click/tap No, it teleports instantly
-    noBtn.addEventListener("pointerdown", (e) => {
-      e.preventDefault();
-      randomPos();
-      footer.textContent = "Nice try 😭";
-    });
-
-    // --- Yes behavior ---
-    yesBtn.addEventListener("click", () => {
-      title.textContent = "YAYYYYY!! 💞";
-      subtitle.textContent = "Best decision you’ve ever made. 😌";
-      footer.textContent = "Screenshot this and send it to me 😤 (optional)";
-      noBtn.style.display = "none";
-      yesBtn.textContent = "❤️";
-      burstHearts();
-    });
-
-    // --- hearts animation ---
-    function spawnHeart() {
-      const el = document.createElement("div");
-      el.className = "heart";
-      el.textContent = ["💖","💘","💝","💗","💕","❤️"][Math.floor(Math.random()*6)];
-      el.style.left = `${Math.random() * 100}vw`;
-      el.style.bottom = `-10vh`;
-      const dur = 2.5 + Math.random() * 2.5;
-      el.style.animationDuration = `${dur}s`;
-      el.style.fontSize = `${16 + Math.random() * 18}px`;
-      hearts.appendChild(el);
-      setTimeout(() => el.remove(), dur * 1000);
-    }
-
-    function burstHearts() {
-      let n = 0;
-      const id = setInterval(() => {
-        for (let i = 0; i < 4; i++) spawnHeart();
-        n++;
-        if (n > 16) clearInterval(id);
-      }, 120);
-    }
-
-    // Start with "No" positioned nicely, then allow roaming
-    requestAnimationFrame(() => {
-      // In case layout differs after fonts, etc.
-      // Keep it near bottom-ish initially.
-      noBtn.style.left = "50%";
-      noBtn.style.top = "60%";
-      noBtn.style.transform = "translate(-50%, -50%)";
-    });
-
-    // If resized, ensure No isn't off-screen
-    window.addEventListener("resize", () => {
-      const r = noBtn.getBoundingClientRect();
-      const x = clamp(r.left, 8, window.innerWidth - r.width - 8);
-      const y = clamp(r.top, 8, window.innerHeight - r.height - 8);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-      noBtn.style.transform = "translate(0, 0)";
-    });
-  </script>
 </body>
 </html>
