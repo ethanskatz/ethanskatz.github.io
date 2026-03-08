@@ -1,24 +1,39 @@
 // ==UserScript==
-// @name Custom Button
-// @match *://instagram.com/*
+// @name Follower Diff
+// @match *://www.instagram.com/*
+// @run-at document-end
 // ==/UserScript==
 
-const button = document.createElement("button");
-button.textContent = "My Button";
+function addButton() {
 
-button.style.position = "fixed";
-button.style.bottom = "20px";
-button.style.right = "20px";
-button.style.padding = "10px 15px";
-button.style.background = "#ff4d4d";
-button.style.color = "white";
-button.style.border = "none";
-button.style.borderRadius = "6px";
-button.style.cursor = "pointer";
-button.style.zIndex = "9999";
+    // Prevent duplicates
+    if (document.getElementById("my-custom-button")) return;
 
-button.onclick = () => {
-    alert("Button clicked!");
-};
+    // Find profile header area
+    const header = document.querySelector("header");
 
-document.body.appendChild(button);
+    if (!header) return;
+
+    const btn = document.createElement("button");
+    btn.id = "my-custom-button";
+    btn.innerText = "My Button";
+
+    btn.style.marginLeft = "10px";
+    btn.style.padding = "6px 12px";
+    btn.style.borderRadius = "8px";
+    btn.style.border = "none";
+    btn.style.background = "#ff3040";
+    btn.style.color = "white";
+    btn.style.cursor = "pointer";
+    btn.style.fontWeight = "bold";
+
+    btn.onclick = () => {
+        const username = window.location.pathname.split("/")[1];
+        alert("Username: " + username);
+    };
+
+    header.appendChild(btn);
+}
+
+// Instagram is a SPA, so watch for navigation
+setInterval(addButton, 1500);
